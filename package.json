@@ -1,0 +1,16 @@
+{
+  "name": "projet_meteo",
+  "version": "1.0.0",
+  "description": "projet api meteo",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
