@@ -11,7 +11,7 @@ app.get('/healthcheck', (req, res) => {
 
 app.get('/releves', async (req, res) => {
     const releves = new releves_model();
-    res.setHeader('Contet-Type', 'application/json');
+    res.setHeader('Content-Type', 'application/json');
     res.status(200).json(await releves.toJson());
 })
 

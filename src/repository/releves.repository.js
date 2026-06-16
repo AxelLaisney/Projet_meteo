@@ -4,16 +4,14 @@ import { releves_model } from "../models/releves_model.js";
 
 export class ReleveRepository {
 
-
     /**
      * 
-     * @param {*} cheminCsv 
+     * @param {string} cheminCsv 
      * @param {releves_model[]} releves
      */
     constructor(cheminCsv) {
         this.cheminCsv = cheminCsv; // l'état encapsulé (plus tard : un cache)
-
-        this.releves = this.findAll.map((ligne, index) => releves_model.depuisLigneCsv(ligne, index));
+        this.releves = await readCSV(cheminCsv)
     }
 
     async findAll() {
@@ -22,13 +20,19 @@ export class ReleveRepository {
     // à compléter : findById(id), save(releve) -> attribue releve.id = max(ids) + 1, deleteById(id)
 
     findById(id) {
-        return this.releve.find(r => r.id === id);
+        return this.releves.find(r => r.id === id);
     }
 
+   
     save(data) {
         // si ya déjà un id on update sinon on créer
-        
+        if (data.id !== null){
+            this.#update(data.id, data)
+        }else{
+            this.#create(data)
+        }
     }
+
 
     #update(id, data) {
         const indexItem = this.releves.findIndex(r => r.id === id);
@@ -51,19 +55,22 @@ export class ReleveRepository {
         }
     }
 
+  
     #create(data) {
-        const ligne = new releves_model(data.ville, data.date, data.tempMin, data.tempMax, data.desc, data.hum)
+        const ligne = new releves_model((this.releves.length + 1),data.ville, data.date, data.tempMin, data.tempMax, data.desc, data.hum)
         this.releves.push(ligne)
     }
 
-    // update(id, données)
-    // create(données)
-
     deleteById(id) {
-        let index = this.releve.findIndex(r => r.id === id);
+        let index = this.releves.findIndex(r => r.id === id);
 
         if (index !== -1) {
+            let deleted = this.releves[index]
             releves.splice(index, 1);
+
+            return deleted
+        }else{
+            return false
         }
     }
 }
