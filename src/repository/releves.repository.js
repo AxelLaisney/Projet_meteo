@@ -1,11 +1,19 @@
 import { readCSV } from "../utils/csv.js";
 import { config } from "../config.js";
-import { releves_model } from "../../../ProjetAPIMeteo/src/models/releve.model.js";
+import { releves_model } from "../models/releves_model.js";
 
 export class ReleveRepository {
+
+
+    /**
+     * 
+     * @param {*} cheminCsv 
+     * @param {releves_model[]} releves
+     */
     constructor(cheminCsv) {
         this.cheminCsv = cheminCsv; // l'état encapsulé (plus tard : un cache)
-        this.releve = this.findAll().slice(1).map(ligne, index => { releves_model.depuisLigneCsv(ligne, index) })
+
+        this.releves = this.findAll.map((ligne, index) => releves_model.depuisLigneCsv(ligne, index));
     }
 
     async findAll() {
@@ -14,25 +22,38 @@ export class ReleveRepository {
     // à compléter : findById(id), save(releve) -> attribue releve.id = max(ids) + 1, deleteById(id)
 
     findById(id) {
-        return this.releve.findIndex(r => r.id === id);
+        return this.releve.find(r => r.id === id);
     }
 
-    save(releve) {
+    save(data) {
         // si ya déjà un id on update sinon on créer
+        
     }
 
     #update(id, data) {
-        const getItem = this.findById(id)
-        if (getItem) {
-            for ({id,ville, date, tempMin, tempMax, desc, hum } in data) {
-                getItem.ville = ville
-                getItem.date = date
-                getItem.tempMin = tempMin
-                getItem.tempMax = tempMax
-                getItem.desc = desc
-                getItem.hum = hum
-            }
+        const indexItem = this.releves.findIndex(r => r.id === id);
+
+        if (indexItem !== -1) {
+            // on créer une copie afin de pouvoir moddifier les informations originaux
+            const copy = this.releves[indexItem]
+
+            copy.ville = data.ville
+            copy.date = data.date
+            copy.tempMin = data.tempMin
+            copy.tempMax = data.tempMax
+            copy.desc = data.desc
+            copy.hum = data.hum
+
+            // on réattribue la copie à l'original
+            this.releves[indexItem] = copy
+
+            return copy
         }
+    }
+
+    #create(data) {
+        const ligne = new releves_model(data.ville, data.date, data.tempMin, data.tempMax, data.desc, data.hum)
+        this.releves.push(ligne)
     }
 
     // update(id, données)
