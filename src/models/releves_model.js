@@ -10,6 +10,16 @@ export class releves_model {
     #description;
     #humidite;
 
+    constructor(id, ville, date, tempMin, tempMax, desc, hum){
+        this.id = id;
+        this.ville = ville;
+        this.date = date;
+        this.tempMin = tempMin;
+        this.tempMax = tempMax;
+        this.description = desc;
+        this.humidite = hum;
+    }
+
     set id(id){
         if(!Number.isNaN(Number(id)) && id > -1){
             this.#id = parseInt(id);
@@ -44,7 +54,6 @@ export class releves_model {
         }else{
             this.#tempMin = null;
         }
-
     }
 
     get tempMin(){
@@ -83,15 +92,7 @@ export class releves_model {
         return this.#humidite;
     }
 
-    constructor(id, ville, date, tempMin, tempMax, desc, hum){
-        this.id = id;
-        this.ville = ville;
-        this.date = date;
-        this.tempMin = tempMin;
-        this.tempMax = tempMax;
-        this.description = desc;
-        this.humidite = hum;
-    }
+
 
     static depuisLigneCsv(line, index){
         const column = line.split(';');
@@ -100,13 +101,14 @@ export class releves_model {
     }
 
     async toJson(){
-        const lines = await readCSV();
-        const data = [];
-        lines.forEach((line, index) => {
-            const releve = releves_model.depuisLigneCsv(line, index);
-            data.push({'id' : releve.id, 'ville': releve.ville, 'date': releve.date, 'tempMin': releve.tempMin, 'tempMax': releve.tempMax, 'description': releve.description, 'humidite': releve.humidite});
-        });
-        const json = JSON.stringify(data);
-        return json;
+        return {
+            'id' : this.id,
+            'ville': this.ville,
+            'date': this.date,
+            'tempMin': this.tempMin,
+            'tempMax': this.tempMax,
+            'description': this.description,
+            'humidite': this.humidite
+        }
     }
 }

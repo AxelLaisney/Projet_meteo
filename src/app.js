@@ -3,7 +3,7 @@ import { readCSV } from './utils/csv.js';
 import { releves_model } from './models/releves_model.js';
 
 const app = express();
-const csv = await readCSV();
+const releves = await readCSV();
 
 app.get('/healthcheck', (req, res) => {
     res.status(200).send({'status': 'OK'});
