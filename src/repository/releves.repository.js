@@ -17,8 +17,19 @@ export class ReleveRepository {
     }
 
     save(releve) {
+        // si ya déjà un id on update sinon on créer
+    }
+
+    update(id, data){
+        const getItem = this.findById(id)
+        if(!getItem){
+            return false
+        }
 
     }
+
+    // update(id, données)
+    // create(données)
 
     deleteById(id) {
         let index = this.releve.findIndex(r => r.id === id);
