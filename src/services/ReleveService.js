@@ -67,4 +67,20 @@ export class ReleveService {
         }
     }
 
+    /**
+     * 
+     * @param {string} ville 
+     * @param {string} date 
+     * @param {number} tempMin 
+     * @param {number} tempMax 
+     * @param {string} description 
+     * @param {number} humidite 
+     * @returns {releves_model}
+     */
+    async createReleve(ville, date, tempMin, tempMax, description, humidite){
+        const releve = new releves_model(null, ville, date, tempMin, tempMax, description, humidite);
+        const newReleve = this.repository.creat(releve);
+        return newReleve.toJson();
+    }
+
 }
