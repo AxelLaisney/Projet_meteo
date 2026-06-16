@@ -1,5 +1,6 @@
 import express, { application } from 'express';
 import { readCSV } from './utils/csv.js';
+import { releves_model } from './models/releves_model.js';
 
 const app = express();
 const csv = await readCSV();
@@ -9,8 +10,9 @@ app.get('/healthcheck', (req, res) => {
 });
 
 app.get('/releves', async (req, res) => {
+    const releves = new releves_model();
     res.setHeader('Contet-Type', 'application/json');
-    res.status(200).json(csv);
+    res.status(200).json(await releves.toJson());
 })
 
 export default app;
