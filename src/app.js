@@ -6,6 +6,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import { relevesRepository } from './repository/relevesRepository.js';
 import { ReleveService } from './services/ReleveService.js';
 import { VilleService } from './services/VilleService.js';
+import { StatsService } from './services/StatsService.js';
 
 const app = express();
 const releves = await readCSV();
@@ -32,5 +33,12 @@ app.get('/villes', async (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(await service.getVilles());
 })
+
+app.get('/stats', async (req, res) => {
+    const service = new StatsService(relevesRepository);
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json(await service.getStats());
+})
+
 
 export default app;

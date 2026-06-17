@@ -17,16 +17,10 @@ export class VilleController {
     }
 
 
-
-
-
-
-
-
 }
 
 
 
 
 
-export const releveController = new ReleveController(VilleService);
+export const villeController = new VilleController(VilleService);
