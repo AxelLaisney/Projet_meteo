@@ -100,15 +100,15 @@ export class releves_model {
         return releve;
     }
 
-    async toJson(){
+    async toJSON(){
         return {
-            'id' : this.id,
-            'ville': this.ville,
-            'date': this.date,
-            'tempMin': this.tempMin,
-            'tempMax': this.tempMax,
-            'description': this.description,
-            'humidite': this.humidite
-        }
+            id : this.id,
+            ville: this.ville,
+            date: this.date,
+            tempMin: this.tempMin,
+            tempMax: this.tempMax,
+            description: this.description,
+            humidite: this.humidite
+        };
     }
 }
