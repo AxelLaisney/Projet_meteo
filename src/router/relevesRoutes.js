@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { releveController as controller } from "../controllers/releves.controller.js";
+import { releveController as controller } from "../controllers/relevesController.js";
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from "swagger-ui-express"
 const router = Router();

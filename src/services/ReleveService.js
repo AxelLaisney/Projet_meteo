@@ -83,7 +83,6 @@ export class ReleveService {
      */
     async createReleve(ville, date, tempMin, tempMax, description, humidite){
         const releve = new releves_model(null, ville, date, tempMin, tempMax, description, humidite);
-        console.log(releve);
         const newReleve = await this.repository.save(releve);
         return await newReleve.toJSON();
     }
