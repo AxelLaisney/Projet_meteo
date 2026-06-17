@@ -40,5 +40,12 @@ app.get('/stats', async (req, res) => {
     res.status(200).json(await service.getStats());
 })
 
+app.get('/stats/:ville', async (req, res) => {
+    const ville = req.params.ville;
+
+    const service = new StatsService(relevesRepository);
+    res.json(await service.getStatsParVille(ville));
+});
+
 
 export default app;

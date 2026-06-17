@@ -25,9 +25,6 @@ export class VilleService {
         return { villes: villesUniques };
     }
 
-    async getStatsParVille(){
-        
-    }
 
 
 }

@@ -2,7 +2,7 @@ import { StatsService } from "../services/StatsService.js";
 
 export class StatsController {
     constructor(service) {
-        this.service = service; // service injecté
+        this.service = service;
     }
 
 
@@ -15,6 +15,16 @@ export class StatsController {
 
         res.json(stats)
     }
+
+    getStatsParVille = async (req, res) => {
+        const stats = await this.service.getStatsParVille(req.params.ville);
+
+        if (!stats) {
+            return res.status(404).json({error: `Aucune stat trouvée pour ${req.params.ville}`});
+        }
+
+        res.json(stats);
+    };
 
 
 }
