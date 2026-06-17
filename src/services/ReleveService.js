@@ -1,4 +1,5 @@
 import { releves_model } from "../models/releves_model.js";
+import { relevesRepository } from "../repository/relevesRepository.js";
 
 export class ReleveService {
     #repository;
@@ -46,12 +47,12 @@ export class ReleveService {
     async updateReleve(releve){
         const releveToUpdate = await this.repository.findById(releve.id);
         if(releveToUpdate){
-            releveToUpdate.ville = releve.ville;
-            releveToUpdate.date = releve.date;
-            releveToUpdate.tempMin = releve.tempMin;
-            releveToUpdate.tempMax = releve.tempMax;
-            releveToUpdate.description = releve.date;
-            releveToUpdate.humidite = releve.humidite;
+            releveToUpdate.ville = releve?.ville;
+            releveToUpdate.date = releve?.date;
+            releveToUpdate.tempMin = releve?.tempMin;
+            releveToUpdate.tempMax = releve?.tempMax;
+            releveToUpdate.description = releve?.date;
+            releveToUpdate.humidite = releve?.humidite;
 
             releve = await this.repository.save(releveToUpdate);
             return await releve.toJSON();
@@ -88,3 +89,5 @@ export class ReleveService {
     }
 
 }
+
+export const releveService = new ReleveService(relevesRepository);

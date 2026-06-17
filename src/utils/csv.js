@@ -1,6 +1,5 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import config from '../config.js';
-import { readFile, writeFile } from 'node:fs/promises';
 import { releves_model } from '../models/releves_model.js';
 
 
