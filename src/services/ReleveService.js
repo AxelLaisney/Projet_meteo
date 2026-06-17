@@ -1,4 +1,4 @@
-import { releves_model } from "../models/releves_model";
+import { releves_model } from "../models/releves_model.js";
 
 export class ReleveService {
     #repository;
@@ -21,7 +21,11 @@ export class ReleveService {
      */
     async getTousLesReleves(){
         const releves = await this.repository.findAll();
-        return releves;
+        const relevesJson = [];
+        releves.forEach(async r => {
+            relevesJson.push(await r.toJSON());
+        });
+        return relevesJson;
     }
 
     /**
@@ -31,7 +35,7 @@ export class ReleveService {
      */
     async getUnReleve(id){
         const releve = await this.repository.findById(id);
-        return releve;
+        return await releve.toJSON();
     }
 
     /**
@@ -40,7 +44,7 @@ export class ReleveService {
      * @returns {releves_model}
      */
     async updateReleve(releve){
-        const releveToUpdate = this.repository.findById(releve.id);
+        const releveToUpdate = await this.repository.findById(releve.id);
         if(releveToUpdate){
             releveToUpdate.ville = releve.ville;
             releveToUpdate.date = releve.date;
@@ -49,8 +53,8 @@ export class ReleveService {
             releveToUpdate.description = releve.date;
             releveToUpdate.humidite = releve.humidite;
 
-            this.repository.update(releveToUpdate);
-            return releveToUpdate;
+            releve = await this.repository.save(releveToUpdate);
+            return await releve.toJSON();
         }
     }
 
@@ -60,10 +64,10 @@ export class ReleveService {
      * @returns {releves_model};
      */
     async deleteReleve(id){
-        const releve = this.repository.findById(id);
+        const releve = await this.repository.findById(id);
         if(releve){
-            this.#repository.delete(releve.id);
-            return releve;
+            const deleteRecord = await this.repository.deleteById(releve.id);
+            return await deleteRecord.toJSON();
         }
     }
 
@@ -79,8 +83,9 @@ export class ReleveService {
      */
     async createReleve(ville, date, tempMin, tempMax, description, humidite){
         const releve = new releves_model(null, ville, date, tempMin, tempMax, description, humidite);
-        const newReleve = this.repository.creat(releve);
-        return newReleve.toJson();
+        console.log(releve);
+        const newReleve = await this.repository.save(releve);
+        return await newReleve.toJSON();
     }
 
 }
