@@ -7,19 +7,14 @@ export class ReleveController {
         this.service = service; // service injecté
     }
 
-    // fonction fléchée en propriété : garde le bon `this` quand on la passe au router
-    listerReleves = async (req, res) => {
-        const releves = await this.service.getTousLesReleves();
-        res.json(releves);
-    };
-
     getUnReleve = async (req, res) => {
         const id = req.params.id;
         const errors = validateId(id);
-        if(errors.length > 0){
+        if( errors ){
             return res.status(404).json({ error: errors });
         }else{
             const releve = await this.service.getUnReleve(id);
+            console.log(releve);
             if(releve){
                 return res.status(200).json(releve);
             }else{
@@ -38,14 +33,16 @@ export class ReleveController {
     };
 
     updateReleve = async (req, res) => {
-        body = req.body;
-        const errors = validateAttribute(body);
+        const id = req.params.id;
+        const body = req.body;
+        const errors = validateAttribute(body, id);
+        
         if(errors > 0){
             return res.status(400).json({ errors: errors });
         }else{
-            const releve = await this.service.updateReleve(body.id, body.ville, body.date, body.tempMin, body.tempMax, body.description, body.humidite);
+            const releve = await this.service.updateReleve(id, body.ville, body.date, body.tempMin, body.tempMax, body.description, body.humidite);
             if(releve){
-                return res.status(200).json({ message: "Le relevé à bien été mis a jour", : releve});
+                return res.status(200).json({ message: "Le relevé à bien été mis a jour", content: releve});
             }else{
                 return res.status(404).json({ error: `Echec de la moddification pour ${body}` })
             }
@@ -74,14 +71,18 @@ export class ReleveController {
         if(errors > 0){
             return res.status(400).json({ errors: errors});
         }else{
-            const releve = this.service.createReleve(body.ville, body.date, body.tempMin, body.tempMax, body.description, body.humidite);
+            const releve = await this.service.createReleve(body.ville, body.date, body.tempMin, body.tempMax, body.description, body.humidite);
             if(releve){
-                return res.status(200).json({ message: 'relevé créé!', releve: releve});
+                return res.status(201).json({ message: 'relevé créé!', content: releve});
             }else{
                 return res.status(400).json({ message: 'Erreur lors de la création', content: body});
             }
         }
         
+    }
+
+    httpRedirect = async (req, res) => {
+        return res.redirect('http://localhost:3001/api-docs');
     }
 }
 

@@ -3,7 +3,10 @@ import config from '../config.js';
 import { releves_model } from '../models/releves_model.js';
 
 
-
+/**
+ * 
+ * @returns {Array}
+ */
 export function readCSV(){
     const content = readFileSync(config.files.csvPath, 'utf-8');
     const lines = content.split('\n').filter(l => l.trim());
@@ -13,6 +16,10 @@ export function readCSV(){
     });
 }
 
+/**
+ * 
+ * @param {Array} relevesTable 
+ */
 export function updateCSV(relevesTable){
     let csv = "ville;date;temperature_min;temperature_max;description;humidite\n";
     relevesTable.forEach( r => {

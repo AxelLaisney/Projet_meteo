@@ -1,4 +1,4 @@
-import { VilleService } from "../services/VilleService";
+import { villeService } from "../services/VilleService.js";
 
 export class VilleController {
     constructor(service) {
@@ -8,19 +8,12 @@ export class VilleController {
 
     getVilles = async (req, res) => {
         const ville = await this.service.getVilles();
-
-        if (!ville) {
+        if (ville) {
+            res.status(200).json(ville);
+        }else{
             return res.status(404).json({ error: `Aucune information sur des villes` });
         }
-
-        res.json(ville)
     }
-
-
 }
 
-
-
-
-
-export const villeController = new VilleController(VilleService);
+export const villeController = new VilleController(villeService);

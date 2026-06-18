@@ -1,5 +1,4 @@
-import { releves_model } from "../models/releves_model.js";
-
+import { relevesRepository } from "../repository/relevesRepository.js";
 export class VilleService {
     #repository
 
@@ -15,6 +14,10 @@ export class VilleService {
         this.repository = repository;
     }
 
+    /**
+     * 
+     * @returns {JSON}
+     */
     async getVilles() {
         const releves = await this.repository.findAll();
 
@@ -24,7 +27,6 @@ export class VilleService {
 
         return { villes: villesUniques };
     }
-
-
-
 }
+
+export const villeService = new VilleService(relevesRepository);

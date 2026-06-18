@@ -1,4 +1,5 @@
-import { StatsService } from "../services/StatsService.js";
+import { statsService } from "../services/StatsService.js";
+import { validateString } from "../utils/validator.js";
 
 export class StatsController {
     constructor(service) {
@@ -8,29 +9,27 @@ export class StatsController {
 
     getStats = async (req, res) => {
         const stats = await this.service.getStats();
-
-        if (!stats) {
+        if (stats) {
+            res.status(200).json(stats)
+        }else{
             return res.status(404).json({ error: `Aucune stat a été trouvé` });
         }
-
-        res.json(stats)
     }
 
     getStatsParVille = async (req, res) => {
-        const stats = await this.service.getStatsParVille(req.params.ville);
-
-        if (!stats) {
-            return res.status(404).json({error: `Aucune stat trouvée pour ${req.params.ville}`});
+        const ville = req.params.ville;
+        const errors = validateString(ville)
+        if(typeof errors !== 'undefined'){
+            res.status(400).json({ error: errors });
+        }else{
+            const stats = await this.service.getStatsParVille(ville);
+            if (stats) {
+                res.json(stats);
+            }else{
+                return res.status(404).json({error: `Aucune stat trouvée pour ${ville}`});
+            }
         }
-
-        res.json(stats);
     };
-
-
 }
 
-
-
-
-
-export const statsController = new StatsController(StatsService);
+export const statsController = new StatsController(statsService);
