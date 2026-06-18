@@ -25,7 +25,7 @@ app.get('/healthcheck', (req, res) => {
 app.get('/releves', async (req, res) => {
     const service = new ReleveService(relevesRepository);
     res.setHeader('Content-Type', 'application/json');
-    res.status(200).json(await service.getTousLesReleves());
+    res.status(200).json(await service.getUnReleve(1));
 })
 
 app.get('/villes', async (req, res) => {

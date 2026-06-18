@@ -25,7 +25,6 @@ export class ReleveRepository {
 
     async findById(id) {
         const releve = this.releves.find(r => parseInt(r.id) === parseInt(id));
-        console.log(releve);
         return releve;
     }
 
