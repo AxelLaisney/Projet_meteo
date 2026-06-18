@@ -32,7 +32,7 @@ export class ReleveService {
      */
     async getUnReleve(id){
         const releve = await this.repository.findById(id);
-        return await releve;
+        return releve;
     }
 
     /**
@@ -51,7 +51,7 @@ export class ReleveService {
             releveToUpdate.humidite = humidite;
 
             const releve = await this.repository.save(releveToUpdate);
-            return await releve;
+            return releve;
         }
     }
 
@@ -64,7 +64,7 @@ export class ReleveService {
         const releve = await this.repository.findById(id);
         if(releve){
             const deleteRecord = await this.repository.deleteById(releve.id);
-            return await deleteRecord;
+            return deleteRecord;
         }
     }
 
@@ -81,7 +81,7 @@ export class ReleveService {
     async createReleve(ville, date, tempMin, tempMax, description, humidite){
         const releve = new releves_model(null, ville, date, tempMin, tempMax, description, humidite);
         const newReleve = await this.repository.save(releve);
-        return await newReleve;
+        return newReleve;
     }
 
 }

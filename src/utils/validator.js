@@ -6,7 +6,7 @@
 export function validateId(id){
     const result = validateNumber(id, 'id');
     if(result){
-        return vresult;
+        return result;
     } 
     if(id < 0){
         return `Id est négatif Id: ${id}`;
@@ -21,17 +21,18 @@ export function validateId(id){
  */
 export function validateAttribute(params, id = false){
     const errors = []
+    if(id){
+        errors.push(validateId(id));
+    }
     errors.push(validateString(params.ville, 'ville'));
     errors.push(validateDate(params.date));
     errors.push(validateNumber(params.tempMin, 'temperature minimale'));
     errors.push(validateNumber(params.tempMax, 'temperature maximal'));
     errors.push(validateString(params.description, 'description'));
     errors.push(validateNumber(params.humidite, 'humidité'));
-    if(params.id){
-        errors.push(validateId(id));
-    }
 
-    return errors.filter(error => typeof error !== undefined);
+    const errorsList = errors.filter(error => typeof error !== 'undefined');
+    return errorsList;
 }
 
 /**
@@ -70,17 +71,17 @@ function validateNumber(num, label){
  * @returns {string|undefined}
  */
 function validateDate(date){
-    const result =  validateString(date, 'date');
-    if(result){
-        return result;
-    }else{
-        const dateEle = date.split('/');
-        const newDate = dateEle[1] + '/' + dateEle[0] + '/' + dateEle[2];
-        if(!isNaN(new Date(newDate))){
+    // const result =  validateString(date, 'date');
+    // if(result){
+    //     return result;
+    // }else{
+    //     if(new Date(date)){
+    //         return `La date est invalide: ${date}`;
+    //     }
+    // }
+    if(isNaN(new Date(date))){
             return `La date est invalide: ${date}`;
         }
-    }
-    
 }
 
 

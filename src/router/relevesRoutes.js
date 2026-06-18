@@ -56,7 +56,7 @@ router.get("/:id", controller.getUnReleve);
  *                 type: string
  *               date:
  *                 type: string
- *                 format: date-time
+ *                 format: date
  *               tempMin:
  *                 type: number
  *               tempMax:
@@ -105,7 +105,7 @@ router.post("/", controller.createReleve);
  *                 type: string
  *               date:
  *                 type: string
- *                 format: date-time
+ *                 format: date
  *               tempMin:
  *                 type: number
  *               tempMax:
