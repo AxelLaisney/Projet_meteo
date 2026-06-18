@@ -1,44 +1,25 @@
+/**
+ * 
+ * @param {number} id 
+ * @returns {string|undefined}
+ */
 export function validateId(id){
-    if(this.validateNumber(id, 'id')){
-        return this.validateNumber(id, 'id');
+    const result = validateNumber(id, 'id');
+    if(result){
+        return vresult;
     } 
     if(id < 0){
         return `Id est négatif Id: ${id}`;
     }
 }
 
-function validateString(str, label){
-    if(str === 'undefined'){
-        return `${label} non défini`;
-    }
-    if(str === ''){
-        return `${label} est vide`;
-    }
-}
-
-function validateNumber(num, label){
-    if(num === 'undefined'){
-        return 'Nombre non défini';
-    }
-    if(Number.isNaN(Number(num))){
-        return `${label} n'est pas un nombre valide : ${num}`;
-    }
-}
-
-function validateDate(date){
-    if(this.validateString(date, 'date')){
-        return this.validateString(date, 'date');
-    }else{
-        const dateEle = date.split('/');
-        const newDate = dateEle[1] + '/' + dateEle[0] + '/' + dateEle[2];
-        if(!isNaN(new Date(newDate))){
-            return `La date est invalide: ${date}`;
-        }
-    }
-    
-}
-
-export function validateAttribute(params){
+/**
+ * 
+ * @param {object} params 
+ * @param {number} id 
+ * @returns {Array}
+ */
+export function validateAttribute(params, id = false){
     const errors = []
     errors.push(validateString(params.ville, 'ville'));
     errors.push(validateDate(params.date));
@@ -50,8 +31,59 @@ export function validateAttribute(params){
         errors.push(validateId(id));
     }
 
-    return errors
+    return errors.filter(error => typeof error !== undefined);
 }
+
+/**
+ * 
+ * @param {string} str 
+ * @param {string} label 
+ * @returns {string|undefined}
+ */
+export function validateString(str, label){
+    if(typeof str === 'undefined'){
+        return `${label} non défini`;
+    }
+    if(str === ''){
+        return `${label} est vide`;
+    }
+}
+
+/**
+ * 
+ * @param {number} num 
+ * @param {string} label 
+ * @returns {string|undefined}
+ */
+function validateNumber(num, label){
+    if(typeof num === 'undefined'){
+        return 'Nombre non défini';
+    }
+    if(Number.isNaN(Number(num))){
+        return `${label} n'est pas un nombre valide : ${num}`;
+    }
+}
+
+/**
+ * 
+ * @param {string} date 
+ * @returns {string|undefined}
+ */
+function validateDate(date){
+    const result =  validateString(date, 'date');
+    if(result){
+        return result;
+    }else{
+        const dateEle = date.split('/');
+        const newDate = dateEle[1] + '/' + dateEle[0] + '/' + dateEle[2];
+        if(!isNaN(new Date(newDate))){
+            return `La date est invalide: ${date}`;
+        }
+    }
+    
+}
+
+
 
 
 

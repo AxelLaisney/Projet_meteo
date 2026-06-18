@@ -93,14 +93,23 @@ export class releves_model {
     }
 
 
-
+    /**
+     * 
+     * @param {string} line 
+     * @param {number} index 
+     * @returns {releves_model}
+     */
     static depuisLigneCsv(line, index){
         const column = line.split(';');
         const releve = new releves_model(index, column[0], column[1], column[2], column[3], column[4], column[5], column[6]);
         return releve;
     }
 
-    async toJSON(){
+    /**
+     * 
+     * @returns {JSON}
+     */
+    toJSON(){
         return {
             id : this.id,
             ville: this.ville,

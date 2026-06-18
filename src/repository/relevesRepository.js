@@ -18,6 +18,10 @@ export class ReleveRepository {
         this.releves = readCSV();
     }
 
+    /**
+     * 
+     * @returns { Array }
+     */
     async findAll() {
         return this.releves;
     }
@@ -28,7 +32,11 @@ export class ReleveRepository {
         return releve;
     }
 
-   
+   /**
+    * 
+    * @param {releves_model} data 
+    * @returns {releves_model}
+    */
     async save(data) {
         if (data.id !== null && !Number.isNaN(Number(data.id))){
             const releve = await this.#update(data);
@@ -39,7 +47,11 @@ export class ReleveRepository {
         }
     }
 
-
+    /**
+     * 
+     * @param {releves_model} releve 
+     * @returns {releves_model}
+     */
     async #update(releve) {
         const index = this.releves.findIndex(r => parseInt(r.id) === parseInt(releve.id));
         this.releves[index] = releve;
@@ -47,14 +59,23 @@ export class ReleveRepository {
         return releve;
     }
 
-  
+    /**
+     * 
+     * @param {releves_model} releve 
+     * @returns {releves_model}
+     */
     async #create(releve) {
-        releve.id = this.releves.length + 1;
+        releve.id = this.releves.length;
         this.releves.push(releve);
         updateCSV(this.releves);
         return releve;
     }
 
+    /**
+     * 
+     * @param {number} id 
+     * @returns {releves_model}
+     */
     async deleteById(id) {
         const releve = this.releves.find(r => parseInt(r.id) === parseInt(id));
         const index = this.releves.findIndex(r => parseInt(r.id) === parseInt(id));

@@ -1,4 +1,4 @@
-import { releves_model } from "../models/releves_model.js";
+import { relevesRepository } from "../repository/relevesRepository.js";
 import { capitalize } from "../utils/toCapitalise.js"
 
 export class StatsService {
@@ -16,8 +16,12 @@ export class StatsService {
         this.repository = repository;
     }
 
+    /**
+     * 
+     * @returns {JSON}
+     */
     async getStats() {
-        const releves = await this.#repository.findAll();
+        const releves = await this.repository.findAll();
 
         const tempsMin = releves.map(r => parseFloat(r.tempMin));
         const tempsMax = releves.map(r => parseFloat(r.tempMax));
@@ -41,6 +45,11 @@ export class StatsService {
         };
     }
 
+    /**
+     * 
+     * @param {string} ville 
+     * @returns {JSON}
+     */
     async getStatsParVille(ville) {
         const releves = await this.#repository.findAll();
         const capiVille = capitalize(ville,true)
@@ -67,8 +76,6 @@ export class StatsService {
             nbReleves: relevesVille.length
         };
     }
-
-
-
-
 }
+
+export const statsService = new StatsService(relevesRepository);

@@ -1,7 +1,19 @@
 import { Router } from "express";
-import { VilleController } from "../controllers/villesController.js";
+import { villeController as controller } from '../controllers/villesController.js';
+
 const router = Router();
 
-router.get("/", VilleController.getVilles);
+/**
+ * @openapi
+ * /villes:
+ *   get:
+ *     summary: Liste des villes
+ *     tags:
+ *       - Villes
+ *     responses:
+ *       200:
+ *         description: Liste unique des villes
+ */
+router.get("/", controller.getVilles);
 
 export default router;

@@ -1,7 +1,5 @@
 import { Router } from "express";
 import { releveController as controller } from "../controllers/relevesController.js";
-import swaggerJSDoc from 'swagger-jsdoc';
-import swaggerUi from "swagger-ui-express"
 const router = Router();
 
 /**
@@ -54,16 +52,25 @@ router.get("/:id", controller.getUnReleve);
  *           schema:
  *             type: object
  *             properties:
+ *               ville: 
+ *                 type: string
  *               date:
  *                 type: string
  *                 format: date-time
- *               temperature:
+ *               tempMin:
  *                 type: number
+ *               tempMax:
+ *                  type: number
+ *               description:
+ *                  type: string
  *               humidite:
  *                 type: number
  *             required:
+ *               - ville
  *               - date
- *               - temperature
+ *               - tempMin
+ *               - tempMax
+ *               - description
  *               - humidite
  *     responses:
  *       201:
@@ -94,11 +101,17 @@ router.post("/", controller.createReleve);
  *           schema:
  *             type: object
  *             properties:
+ *               ville:
+ *                 type: string
  *               date:
  *                 type: string
  *                 format: date-time
- *               temperature:
+ *               tempMin:
  *                 type: number
+ *               tempMax:
+ *                 type: number
+ *               description:
+ *                 type: string
  *               humidite:
  *                 type: number
  *     responses:
